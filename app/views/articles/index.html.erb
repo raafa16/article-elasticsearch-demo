@@ -23,9 +23,28 @@
       <tbody>
       <% @articles.each do |article| %>
           <tr>
-            <td><%= article.title %></td>
-            <td><%= article.subtitle %></td>
-            <td><%= article.content %></td>
+            <td><% if article.try(:highlight).try(:title) %>
+                  <% article.highlight.title.each do |snippet| %>
+                      <p><%= snippet.html_safe %>...</p>
+                  <% end %>
+                  <% else %>
+                <%= article.title %>
+              <% end %>
+            </td>
+            <td><% if article.try(:highlight).try(:subtitle) %>
+                  <% article.highlight.subtitle.each do |snippet| %>
+                      <p><%= snippet.html_safe %>...</p>
+                  <% end %>
+              <% else %>
+                  <%= article.subtitle %>
+              <% end %></td>
+            <td><% if article.try(:highlight).try(:content) %>
+                  <% article.highlight.content.each do |snippet| %>
+                      <p><%= snippet.html_safe %>...</p>
+                  <% end %>
+              <% else %>
+                  <%= article.content %>
+              <% end %></td>
           </tr>
       <% end %>
       </tbody>
