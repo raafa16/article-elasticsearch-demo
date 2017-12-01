@@ -1,30 +1,40 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Articles</h1>
+<%= form_for articles_path, method: :get do |f| %>
+    <p>
+      <%= f.label "Search for" %>
+      <%= text_field_tag :q, params[:q] %>
+      <%= submit_tag "Go", name: nil %>
+    </p>
+<% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Subtitle</th>
-      <th>Content</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @articles.each do |article| %>
+<% if @articles.present? %>
+    <table>
+      <thead>
       <tr>
-        <td><%= article.title %></td>
-        <td><%= article.subtitle %></td>
-        <td><%= article.content %></td>
-        <td><%= link_to 'Show', article %></td>
-        <td><%= link_to 'Edit', edit_article_path(article) %></td>
-        <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Title</th>
+        <th>Subtitle</th>
+        <th>Content</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+      </thead>
+
+      <tbody>
+      <% @articles.each do |article| %>
+          <tr>
+            <td><%= article.title %></td>
+            <td><%= article.subtitle %></td>
+            <td><%= article.content %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <h1>No articles found</h1>
+<% end %>
+
+
 
 <br>
 

@@ -5,11 +5,21 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+ruby '2.4.2'
+
+gem 'elasticsearch-model'
+
+gem 'elasticsearch-rails'
+
+gem 'faker', '~> 1.6', '>= 1.6.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18'
+
+gem 'pry', '~> 0.10.3'
+
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
