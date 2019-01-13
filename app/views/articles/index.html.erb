@@ -1,63 +1,76 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Articles</h1>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container text-center">
+    <h1 class="display-4">Articles</h1>
+    <p class="lead">ElasticSearch Away!!!</p>
+  </div>
+</div>
+
 <%= form_for articles_path, method: :get do |f| %>
-    <p>
-      <%= f.label "Search for" %>
-      <%= text_field_tag :q, params[:q] %>
-      <%= submit_tag "Go", name: nil %>
-    </p>
+  <div class="form-row align-items-center">
+    <div class="form-group col-md-3 mx-auto d-inline-flex">
+      <%= text_field_tag :q, params[:q], class: "form-control", placeholder: "Search" %>
+      <%= submit_tag "Go", name: nil, class: "btn btn-primary" %>
+    </div>
+  </div>
 <% end %>
 
-<% if @articles.present? %>
-    <table>
-      <thead>
-      <tr>
-        <th>Title</th>
-        <th>Subtitle</th>
-        <th>Content</th>
-        <th colspan="3"></th>
-      </tr>
-      </thead>
+<%= link_to 'New Article', new_article_path, class:"btn btn-primary text-center" %>
 
-      <tbody>
+
+<% if @articles.present? %>
+  <table class="table table-striped table-dark">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Subtitle</th>
+        <th scope="col">Body</th>
+      </tr>
+    </thead>
+    <tbody>
       <% @articles.each do |article| %>
-          <tr>
-            <td>
-              <% if article.try(:highlight).try(:title) %>
-                <% article.highlight.title.each do |snippet| %>
-                    <p><%= snippet.html_safe %>...</p>
-                <% end %>
-              <% else %>
-                <%= article.title %>
+        <tr>
+          <th scope="row">
+            <% if article.try(:highlight).try(:id) %>
+              <% article.highlight.id.each do |snippet| %>
+                <p><%= snippet.html_safe %>...</p>
               <% end %>
-            </td>
-            <td>
-              <% if article.try(:highlight).try(:subtitle) %>
-                <% article.highlight.subtitle.each do |snippet| %>
+            <% else %>
+              <%= article.id %>
+            <% end %>
+          </th>
+          <td>
+            <% if article.try(:highlight).try(:title) %>
+              <% article.highlight.title.each do |snippet| %>
+                <p><%= snippet.html_safe %>...</p>
+              <% end %>
+            <% else %>
+              <%= article.title %>
+            <% end %>
+          </td>
+          <td>
+            <% if article.try(:highlight).try(:subtitle) %>
+              <% article.highlight.subtitle.each do |snippet| %>
+                <p><%= snippet.html_safe %>...</p>
+              <% end %>
+            <% else %>
+              <%= article.subtitle %>
+            <% end %></td>
+          <td>
+            <% if article.try(:highlight).try(:content) %>
+              <% article.highlight.content.each do |snippet| %>
                   <p><%= snippet.html_safe %>...</p>
-                <% end %>
-              <% else %>
-                <%= article.subtitle %>
-              <% end %></td>
-            <td>
-              <% if article.try(:highlight).try(:content) %>
-                <% article.highlight.content.each do |snippet| %>
-                    <p><%= snippet.html_safe %>...</p>
-                <% end %>
-              <% else %>
-                <%= article.content %>
-              <% end %></td>
-          </tr>
+              <% end %>
+            <% else %>
+              <%= article.content %>
+            <% end %>
+          </td>
+        </tr>
       <% end %>
-      </tbody>
-    </table>
+    </tbody>
+  </table>
 <% else %>
     <h1>No articles found</h1>
 <% end %>
-
-
-
-<br>
-
-<%= link_to 'New Article', new_article_path %>

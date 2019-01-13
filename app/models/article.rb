@@ -1,6 +1,11 @@
 require 'elasticsearch/model'
 
 class Article < ActiveRecord::Base
+
+  # validations
+  validates_presence_of :title, :subtitle, :content
+
+  # elasticsearch configuration
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
@@ -8,7 +13,7 @@ class Article < ActiveRecord::Base
 
   settings index: { number_of_shards: 1 } do
     mappings dynamic: 'false' do
-      indexes :title, analyzer: 'english'
+      indexes :title, analyzer: 'english', index_options: 'offsets'
       indexes :subtitle, analyzer: 'english'
       indexes :content, analyzer: 'english'
     end
@@ -52,4 +57,4 @@ Article.__elasticsearch__.client.indices.create \
   body: { settings: Article.settings.to_hash, mappings: Article.mappings.to_hash }
 
 # Index all article records from the DB to Elasticsearch
-Article.import
+Article.import force: true
