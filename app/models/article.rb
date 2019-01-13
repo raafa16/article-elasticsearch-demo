@@ -52,4 +52,4 @@ Article.__elasticsearch__.client.indices.create \
   body: { settings: Article.settings.to_hash, mappings: Article.mappings.to_hash }
 
 # Index all article records from the DB to Elasticsearch
-Article.import force: true
+Article.import

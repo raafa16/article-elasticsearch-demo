@@ -7,9 +7,9 @@ end
 
 ruby '2.4.2'
 
-gem 'elasticsearch-model'
+gem 'elasticsearch-model', '~> 5.0.1'
 
-gem 'elasticsearch-rails'
+gem 'elasticsearch-rails', '~> 5.0.1'
 
 gem 'faker', '~> 1.6', '>= 1.6.3'
 
