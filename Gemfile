@@ -7,7 +7,7 @@ end
 
 ruby '2.4.2'
 
-gem 'bootstrap', '~> 4.2.1'
+gem "bootstrap", ">= 4.3.1"
 
 gem 'elasticsearch-model', '~> 5.0.1'
 
